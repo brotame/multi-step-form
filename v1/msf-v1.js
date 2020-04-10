@@ -1,21 +1,28 @@
 /* Multi Step Form v1 */
 
 class MSF {
-  constructor(form, next, back, warningClass) {
+  constructor(form, next, back, nextText, submitText, alertText, warningClass) {
     this.form = document.getElementById(form);
     this.next = document.getElementById(next);
     this.back = document.getElementById(back);
+    this.submit = this.form.querySelector('input[type="submit"]');
     this.mask = this.form.querySelector(".w-slider-mask");
     this.steps = this.form.querySelectorAll(".w-slide");
+    this.rightArrow = this.form.querySelector(".w-slider-arrow-right");
+    this.leftArrow = this.form.querySelector(".w-slider-arrow-left");
+    this.nextText = nextText;
+    this.submitText = submitText;
+    this.alertText = alertText;
     this.warningClass = warningClass;
   }
 }
 
 let msfController = {
   init: (msf) => {
+    console.log(msf);
     let start = () => {
       setEventListeners();
-      setSlideHeight(0);
+      setMaskHeight(0);
     };
 
     let setEventListeners = () => {
@@ -23,33 +30,64 @@ let msfController = {
       msf.back.addEventListener("click", backClick);
     };
 
-    let setSlideHeight = (index) => {
+    let setMaskHeight = (index) => {
       msf.mask.style.height = "";
       msf.mask.style.height = `${msf.steps[index].offsetHeight}px`;
     };
 
-    let nextClick = (e) => {
-      let currentStep = e.target.getAttribute("step");
+    let nextClick = () => {
+      let currentStep = parseInt(msf.next.getAttribute("step"));
       let filledFields = checkRequiredInputs(currentStep);
+      let selectedRadios = checkRequiredRadios(currentStep);
       let selectedCheckboxes = checkRequiredCheckboxes(currentStep);
-      setConfirmValues(currentStep);
-      console.log(filledFields);
-      console.log(selectedCheckboxes);
+
+      if (filledFields && selectedRadios && selectedCheckboxes) {
+        currentStep++;
+        msf.next.setAttribute("step", currentStep);
+        if (currentStep === msf.steps.length) {
+          msf.submit.click();
+          msf.next.style.display = "none";
+          msf.back.style.display = "none";
+        } else {
+          msf.rightArrow.click();
+          setMaskHeight(currentStep);
+          if (currentStep === msf.steps.length - 1) {
+            msf.next.textContent = msf.submitText;
+          }
+        }
+      } else {
+        alert(msf.alertText);
+      }
     };
 
-    let backClick = () => {};
+    let backClick = () => {
+      let currentStep = parseInt(msf.next.getAttribute("step"));
+      let previousStep = currentStep - 1;
+
+      msf.leftArrow.click();
+      setMaskHeight(previousStep);
+      msf.next.setAttribute("step", previousStep);
+      if (previousStep === msf.steps.length - 2) {
+        msf.next.textContent = msf.nextText;
+      }
+    };
 
     let checkRequiredInputs = (index) => {
-      let requiredInputs = msf.steps[index].querySelectorAll("input[required]");
+      let requiredInputs = msf.steps[index].querySelectorAll(
+        "input[required], select[required], textarea[required]"
+      );
       let filledInputs = 0;
       let pass;
 
       requiredInputs.forEach((el) => {
-        if (el.value && el.type !== "email") {
+        let value = el.value;
+        setConfirmValue(el.id, value);
+
+        if (value && el.type !== "email") {
           el.classList.remove(msf.warningClass);
           filledInputs++;
-        } else if (el.value && el.type === "email") {
-          let correctEmail = validateEmail(el.value);
+        } else if (value && el.type === "email") {
+          let correctEmail = validateEmail(value);
           if (correctEmail) {
             el.classList.remove(msf.warningClass);
             filledInputs++;
@@ -72,13 +110,15 @@ let msfController = {
 
     let checkRequiredCheckboxes = (index) => {
       let requiredInputs = msf.steps[index].querySelectorAll(
-        "input[type=checkbox][required]"
+        'input[type="checkbox"][required]'
       );
       let checkedInputs = 0;
       let pass;
 
       requiredInputs.forEach((el) => {
         let checkbox = el.parentNode.querySelector(".w-checkbox-input");
+        let value = el.value;
+        setConfirmValue(el.id, value);
 
         if (el.checked) {
           if (checkbox) {
@@ -96,18 +136,41 @@ let msfController = {
       return pass;
     };
 
-    let setConfirmValues = (index) => {
-      let inputs = msf.steps[index].querySelectorAll("input");
+    let checkRequiredRadios = (index) => {
+      let requiredInputs = msf.steps[index].querySelectorAll(
+        'input[type="radio"][required]'
+      );
+      let checkedInputs = 0;
+      let pass;
 
-      inputs.forEach((el) => {
-        let confirmElement = document.getElementById(`${el.id}-value`);
+      requiredInputs.forEach((el) => {
+        let radio = el.parentNode.querySelector(".w-radio-input");
+        let radioGroup = el.getAttribute("name");
+        let isChecked = document.querySelector(
+          `input[name="${radioGroup}"]:checked`
+        );
 
-        if (el.value && confirmElement) {
-          confirmElement.textContent = el.value;
-        } else if (!el.value && confirmElement) {
-          confirmElement.textContent = "";
+        if (isChecked) {
+          setConfirmValue(radioGroup, isChecked.value);
+          radio.classList.remove(msf.warningClass);
+          checkedInputs++;
+        } else {
+          radio.classList.add(msf.warningClass);
         }
       });
+
+      checkedInputs === requiredInputs.length ? (pass = true) : (pass = false);
+      return pass;
+    };
+
+    let setConfirmValue = (id, value) => {
+      let confirmElement = document.getElementById(`${id}-value`);
+
+      if (value && confirmElement) {
+        confirmElement.textContent = value;
+      } else if (!value && confirmElement) {
+        confirmElement.textContent = "----";
+      }
     };
 
     start();
@@ -116,6 +179,14 @@ let msfController = {
 
 var Webflow = Webflow || [];
 Webflow.push(function () {
-  let msfUI = new MSF("msf", "msf-next", "msf-back", "warning");
+  let msfUI = new MSF(
+    "msf",
+    "msf-next",
+    "msf-back",
+    "Next",
+    "Submit",
+    "Please, fill all the required fields.",
+    "warning"
+  );
   msfController.init(msfUI);
 });
