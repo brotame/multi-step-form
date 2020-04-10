@@ -103,11 +103,6 @@ let msfController = {
       return pass;
     };
 
-    let validateEmail = (email) => {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    };
-
     let checkRequiredCheckboxes = (index) => {
       let requiredInputs = msf.steps[index].querySelectorAll(
         'input[type="checkbox"][required]'
@@ -161,6 +156,11 @@ let msfController = {
 
       checkedInputs === requiredInputs.length ? (pass = true) : (pass = false);
       return pass;
+    };
+
+    let validateEmail = (email) => {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
     };
 
     let setConfirmValue = (id, value) => {
