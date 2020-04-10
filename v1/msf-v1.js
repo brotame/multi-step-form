@@ -35,6 +35,8 @@ let msfController = {
       console.log(requiredFields);
     };
 
+    let backClick = () => {};
+
     let checkRequiredInputs = (index) => {
       let requiredInputs = msf.steps[index].querySelectorAll("[required]");
       let filledInputs = 0;
@@ -79,8 +81,6 @@ let msfController = {
         }
       });
     };
-
-    let backClick = () => {};
 
     start();
   },
