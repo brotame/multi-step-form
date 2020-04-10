@@ -176,17 +176,3 @@ let msfController = {
     start();
   },
 };
-
-var Webflow = Webflow || [];
-Webflow.push(function () {
-  let msfUI = new MSF(
-    "msf",
-    "msf-next",
-    "msf-back",
-    "Next",
-    "Submit",
-    "Please, fill all the required fields.",
-    "warning"
-  );
-  msfController.init(msfUI);
-});
