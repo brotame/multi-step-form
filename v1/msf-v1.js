@@ -30,15 +30,17 @@ let msfController = {
 
     let nextClick = (e) => {
       let currentStep = e.target.getAttribute("step");
-      let requiredFields = checkRequiredInputs(currentStep);
+      let filledFields = checkRequiredInputs(currentStep);
+      let selectedCheckboxes = checkRequiredCheckboxes(currentStep);
       setConfirmValues(currentStep);
-      console.log(requiredFields);
+      console.log(filledFields);
+      console.log(selectedCheckboxes);
     };
 
     let backClick = () => {};
 
     let checkRequiredInputs = (index) => {
-      let requiredInputs = msf.steps[index].querySelectorAll("[required]");
+      let requiredInputs = msf.steps[index].querySelectorAll("input[required]");
       let filledInputs = 0;
       let pass;
 
@@ -66,6 +68,32 @@ let msfController = {
     let validateEmail = (email) => {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
+    };
+
+    let checkRequiredCheckboxes = (index) => {
+      let requiredInputs = msf.steps[index].querySelectorAll(
+        "input[type=checkbox][required]"
+      );
+      let checkedInputs = 0;
+      let pass;
+
+      requiredInputs.forEach((el) => {
+        let checkbox = el.parentNode.querySelector(".w-checkbox-input");
+
+        if (el.checked) {
+          if (checkbox) {
+            checkbox.classList.remove(msf.warningClass);
+          }
+          checkedInputs++;
+        } else {
+          if (checkbox) {
+            checkbox.classList.add(msf.warningClass);
+          }
+        }
+      });
+
+      checkedInputs === requiredInputs.length ? (pass = true) : (pass = false);
+      return pass;
     };
 
     let setConfirmValues = (index) => {
