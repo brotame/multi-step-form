@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - Email validation
+- Checkbox validation
+- Radio inputs validation
 
 ### Changed
 
