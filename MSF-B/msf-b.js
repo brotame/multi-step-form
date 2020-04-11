@@ -95,7 +95,7 @@ class MSF {
     alert(this.alertText);
   }
 
-  setConfirmValue(index) {
+  setConfirmValues(index) {
     let inputs = this.getInputs(index);
 
     inputs.forEach((el) => {
@@ -151,7 +151,7 @@ let msfController = {
       let filledFields = checkRequiredInputs(currentStep);
 
       if (filledFields) {
-        msf.setConfirmValue(currentStep);
+        msf.setConfirmValues(currentStep);
         currentStep++;
         msf.setStepAttribute(currentStep);
         if (currentStep === msf.steps.length) {
