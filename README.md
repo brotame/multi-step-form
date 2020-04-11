@@ -126,8 +126,6 @@ Replace the following strings:
 
 #### Initialize examples
 
-Here are some examples of usage:
-
 Form that doesn't use the hidden form functionality:
 
 ```html
