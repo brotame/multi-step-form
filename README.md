@@ -28,6 +28,20 @@ You can hide the slider arrows and navigation as you won't use them. Instead, pl
 
 It is recommended to hide the Back button in the first slide using Webflow interactions to avoid confusing users.
 
+### Warning class
+
+When an input is not filled, the script adds a CSS class to it. You can create the CSS class using Webflow itself or via custom code. I.E:
+
+```html
+<style>
+  .warning {
+    border-color: red;
+  }
+</style>
+```
+
+If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure to set the style to **Custom** inside the element settings in the Webflow designer.
+
 ### _Optional_: Inputs confirm
 
 If you want to display the value of the inputs that the user provided, you must:
@@ -74,5 +88,83 @@ You've got two options (**only do one of them**):
 2. Include the script tag below in the **before <\/body> tag** section of your page:
 
 ```html
-<script src="dist/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/brotaonline/multi-step-form@1.2/dist/msf.min.js></script>
+```
+
+### Initialize the script
+
+Place the script tag below in the **before <\/body> tag** section of your page after the main script.
+Replace the following strings:
+
+- FORM_ID: the ID of the Form element. `I.E: form`
+- NEXT_BUTTON_ID: the ID of the Next button. `I.E: next`
+- BACK_BUTTON_ID: the ID of the Back button. `I.E: back`
+- NEXT_BUTTON_TEXT: the text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. `I.E: Next`
+- SUBMIT_BUTTON_TEXT: the text that you want to display when the user reaches the last step. `I.E: Submit`
+- ALERT_TEXT: the text that you want to show when some inputs are not filled. `I.E: Please, fill all the required fields.`
+- WARNING_CLASS: the CSS class that you want to add to the inputs that are not filled. `I.E: warning`
+- **OPTIONAL:** HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this field. `I.E: hidden-form`
+
+```html
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    let msfData = new MSF(
+      "FORM_ID",
+      "NEXT_BUTTON_ID",
+      "BACK_BUTTON_ID",
+      "NEXT_BUTTON_TEXT",
+      "SUBMIT_BUTTON_TEXT",
+      "ALERT_TEXT",
+      "WARNING_CLASS",
+      "OPTIONAL_HIDDEN_FORM_ID"
+    );
+    msfController.init(msfData);
+  });
+</script>
+```
+
+#### Initialize examples
+
+Here are some examples of usage:
+
+Form that doesn't use the hidden form functionality:
+
+```html
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    let msfData = new MSF(
+      "msf",
+      "msf-next",
+      "msf-back",
+      "Next",
+      "Submit",
+      "Please, fill all the required fields.",
+      "warning"
+    );
+    msfController.init(msfData);
+  });
+</script>
+```
+
+Form that uses the hidden form functionality:
+
+```html
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    let msfData = new MSF(
+      "multi-step-form",
+      "next-button",
+      "back-button",
+      "Next Step",
+      "Send",
+      "There are some fields that are not filled.",
+      "red-border",
+      "hidden-form"
+    );
+    msfController.init(msfData);
+  });
+</script>
 ```
