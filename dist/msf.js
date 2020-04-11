@@ -131,7 +131,6 @@ class MSF {
 
 let msfController = {
   init: (msf) => {
-    console.log(msf);
     let start = () => {
       setEventListeners();
       msf.setMaskHeight(0);
