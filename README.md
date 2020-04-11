@@ -64,7 +64,7 @@ In order to make the form work, you must setup the script and initialize it:
 
 ### Setup the script
 
-The code is located inside the `msf.js` file. A minified version `msf.min.js` is also available.
+The code is located inside the `/dist/msf.js` file. A minified version `/dist/msf.min.js` is also available.
 You've got two options (**only do one of them**):
 
 1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page.
