@@ -1,4 +1,7 @@
-/* Multi Step Form functionality for Webflow */
+/**
+ * Multi Step Form functionality for Webflow
+ * MIT License © Alex Iglesias - BROTA.
+ */
 
 class MSF {
   constructor(
