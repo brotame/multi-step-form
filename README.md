@@ -47,7 +47,7 @@ In order to do so, you must:
 
 > I.E: to collect the email field that has **#email** ID, you must place in the hidden form an email field with **#hidden-email** as ID.
 
-### Summary
+### Webflow Setup Summary
 
 To sum up, the following items **must have a unique ID**:
 
@@ -64,12 +64,12 @@ In order to make the form work, you must setup the script and initialize it:
 
 ### Setup the script
 
-The code is located inside the `/dist/msf.js` file. A minified version `/dist/msf.min.js` is also available.
+The code is located inside the `/dist/msf.js` file.
 You've got two options (**only do one of them**):
 
 1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page.
 
-   > Remember to put the code inside a <script><\/script> tag. It is recommended to use the minified version as it will reduce significantly the amount of characters used.
+   > Remember to put the code inside a <script><\/script> tag. It is recommended first minify the code as it will reduce significantly the amount of characters used.
 
 2. Include the script tag below in the **before <\/body> tag** section of your page:
 
