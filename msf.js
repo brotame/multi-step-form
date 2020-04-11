@@ -175,10 +175,12 @@ let msfController = {
       let currentStep = parseInt(msf.next.getAttribute("step"));
       let previousStep = currentStep - 1;
 
-      msf.goBack();
-      msf.setMaskHeight(previousStep);
-      msf.setStepAttribute(previousStep);
-      msf.setNextButtonText(previousStep);
+      if (previousStep >= 0) {
+        msf.goBack();
+        msf.setMaskHeight(previousStep);
+        msf.setStepAttribute(previousStep);
+        msf.setNextButtonText(previousStep);
+      }
     };
 
     let checkRequiredInputs = (index) => {
