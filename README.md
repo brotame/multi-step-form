@@ -66,5 +66,5 @@ In order to make the form work, you must setup the script and initialize it:
 
 The code is located inside the `msf.js` file. You've got two options:
 
-1. Take the code from the file and manually place it inside the **before <\/body> tag** of your project.
-   > Remember to put the code iniside a \<script\><\/script> tag.
+1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page/project.
+   > Remember to put the code iniside a <script><\/script> tag. It is recommended to first minify the code before placing it on your Webflow project, as it will reduce significantly the amount of characters used.
