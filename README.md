@@ -10,9 +10,16 @@ In order to make the form work as intended, you will need to set up some compone
 
 ### Webflow setup
 
-You must place a slider inside the form that you want to use.
+The setup requires the use of...
 
-#### Test
+#### Form and slider
+
+Place a slider inside the form that you want to use. Inside each slide, you can put all the inputs you want.
+Give a unique ID to the form.
+
+> Note: Make sure that you give the ID to the **Form** and not the _Form Block_.
+
+#### Recap
 
 The following items must have a unique ID:
 
