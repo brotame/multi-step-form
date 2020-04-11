@@ -15,17 +15,18 @@ In order to make the form work as intended, you will need to set up some compone
 Place a slider inside the form that you are using. Inside each slide, you can put all the inputs you want.
 Make sure that:
 
-- The form has a submit button placed anywhere inside it. Hide it as the Next button will replace its functionality.
-- The form has a unique ID. `I.E: #form`
+- The form has a submit button placed anywhere inside it. **Hide it** as the _Next_ button will replace its functionality.
+- The form has a unique ID. `I.E: **#form**`
 
-> Note: Make sure that you give the ID to the **Form** and not the _Form Block_.
+> Note: Make sure that you give the ID to the **Form** element and not to the _Form Block_ element.
 
 #### Step change buttons
 
-You can hide the slider arrows and navigation as you won't use them. Instead, place two buttons anywhere you want and give them a unique ID.
+You can hide the slider arrows and navigation as you won't use them. Instead, place two buttons **anywhere you want** and give them a unique ID.
 
-> I.E: place a Next button with **#next** ID and a Back button with **#back** ID.
-> It is recommended to hide the Back button in the first slide using Webflow interactions to avoid confusing users.
+> I.E: place a button with **#next** ID for the _Next Step_ functionality, and a button with **#back** ID for the _Previous Step_ functionality.
+
+It is recommended to hide the Back button in the first slide using Webflow interactions to avoid confusing users.
 
 #### _Optional_: Inputs confirm
 
