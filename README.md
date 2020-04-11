@@ -107,7 +107,7 @@ Replace the following strings:
 - SUBMIT_BUTTON_TEXT: the text that you want to display when the user reaches the last step. `I.E: Submit`
 - ALERT_TEXT: the text that you want to show when some inputs are not filled. `I.E: Please, fill all the required fields.`
 - WARNING_CLASS: the CSS class that you want to add to the inputs that are not filled. `I.E: warning`
-- **OPTIONAL:** HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this field. `I.E: hidden-form`
+- _OPTIONAL:_ HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this field. `I.E: hidden-form`
 
 ```html
 <script>
