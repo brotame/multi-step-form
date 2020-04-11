@@ -87,7 +87,7 @@ You've got two options (**only do one of them**):
 
 1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page.
 
-   > Remember to put the code inside a <script><\/script> tag. It is recommended first minify the code as it will reduce significantly the amount of characters used.
+   > Remember to put the code inside a <script><\/script> tag. It is recommended to first minify the code as it will reduce significantly the amount of characters used.
 
 2. Include the script tag below in the **before <\/body> tag** section of your page:
 
