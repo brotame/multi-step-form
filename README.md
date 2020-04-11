@@ -64,7 +64,15 @@ In order to make the form work, you must setup the script and initialize it:
 
 ### Setup the script
 
-The code is located inside the `msf.js` file. You've got two options:
+The code is located inside the `msf.js` file. A minified version `msf.min.js` is also available.
+You've got two options (**only do one of them**):
 
-1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page/project.
-   > Remember to put the code iniside a <script><\/script> tag. It is recommended to first minify the code before placing it on your Webflow project, as it will reduce significantly the amount of characters used.
+1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page.
+
+   > Remember to put the code inside a <script><\/script> tag. It is recommended to use the minified version as it will reduce significantly the amount of characters used.
+
+2. Include the script tag below in the **before <\/body> tag** section of your page:
+
+```html
+<script src="dist/clipboard.min.js"></script>
+```
