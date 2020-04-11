@@ -19,10 +19,22 @@ Give a unique ID to the form.
 
 > Note: Make sure that you give the ID to the **Form** and not the _Form Block_.
 
+#### Step change buttons
+
+You can hide the slider arrows and navigation as you won't use them. Instead, place two buttons anywhere you want and give them a unique ID.
+
+#### Optional: Inputs confirm
+
+If you want to display the required inputs value that the user provided, just place a text block anywhere you want with the following ID: `Input ID + "-value"`
+
+> I.E: to display the value of an input that has a #name ID, just place a text block with #name-value as ID.
+
 #### Recap
 
-The following items must have a unique ID:
+To sum up, the following items must have a unique ID:
 
 - Form
 - Next button
 - Back button
+- (Optional) Inputs + Text blocks to display them
+- (Optional) Hidden Form
