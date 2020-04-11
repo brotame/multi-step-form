@@ -1,4 +1,4 @@
-/* Multi Step Form - B */
+/* Multi Step Form functionality for Webflow */
 
 class MSF {
   constructor(
