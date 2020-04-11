@@ -2,7 +2,7 @@
 
 A custom multi step form made for Webflow websites. You can check the cloneable project [here](https://webflow.com/website/Multi-Step-Form-with-Input-Validation).
 
- <img width="728" src="https://raw.githubusercontent.com/brotaonline/multi-step-form/master/screenshot.PNG" alt="Demo">
+<a href="https://webflow.com/website/Multi-Step-Form-with-Input-Validation"><img width="728" src="https://raw.githubusercontent.com/brotaonline/multi-step-form/master/screenshot.PNG" alt="Demo"></a>
 
 # How to use it
 
