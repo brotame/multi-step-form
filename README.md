@@ -52,6 +52,7 @@ If you want to display the value of the inputs that the user provided, you must:
    - `GroupName + "-value"` for radio inputs.
 
 > I.E: to display the value of an input that has a **#name** ID, just place a text block with **#name-value** as ID.
+
 > I.E: to display the value of the selected radio input in the group named **variants**, just place a text block with **#variants-value** as ID.
 
 ### _Optional_: Submit an additional form on the first step
