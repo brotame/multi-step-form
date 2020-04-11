@@ -47,9 +47,12 @@ If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure
 If you want to display the value of the inputs that the user provided, you must:
 
 1. Give the inputs that you want to display a unique ID.
-2. Place a text block or a paragraph anywhere you want with the following ID: `InputID + "-value"`
+2. Place a text block or a paragraph anywhere you want with the following ID:
+   - `InputID + "-value"` for fields and checkboxes.
+   - `GroupName + "-value"` for radio inputs.
 
 > I.E: to display the value of an input that has a **#name** ID, just place a text block with **#name-value** as ID.
+> I.E: to display the value of the selected radio input in the group named **variants**, just place a text block with **#variants-value** as ID.
 
 ### _Optional_: Submit an additional form on the first step
 
