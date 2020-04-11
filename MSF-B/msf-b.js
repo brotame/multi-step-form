@@ -1,11 +1,24 @@
-/* Multi Step Form v1 */
+/* Multi Step Form - B */
 
 class MSF {
-  constructor(form, next, back, nextText, submitText, alertText, warningClass) {
+  constructor(
+    form,
+    hiddenForm,
+    next,
+    back,
+    nextText,
+    submitText,
+    alertText,
+    warningClass
+  ) {
     this.form = document.getElementById(form);
+    this.hiddenForm = document.getElementById(hiddenForm);
+    this.submitButton = this.form.querySelector('input[type="submit"]');
+    this.hiddenSubmitButton = this.hiddenForm.querySelector(
+      'input[type="submit"]'
+    );
     this.next = document.getElementById(next);
     this.back = document.getElementById(back);
-    this.submitButton = this.form.querySelector('input[type="submit"]');
     this.mask = this.form.querySelector(".w-slider-mask");
     this.steps = this.form.querySelectorAll(".w-slide");
     this.rightArrow = this.form.querySelector(".w-slider-arrow-right");
@@ -14,6 +27,11 @@ class MSF {
     this.submitText = submitText;
     this.alertText = alertText;
     this.warningClass = warningClass;
+  }
+
+  getInputs(index) {
+    let inputs = this.steps[index].querySelectorAll("input, select, textarea");
+    return Array.from(inputs);
   }
 
   setMaskHeight(index) {
@@ -46,6 +64,20 @@ class MSF {
     this.submitButton.click();
   }
 
+  submitHiddenForm(index) {
+    let inputs = this.getInputs(index);
+
+    inputs.forEach((el) => {
+      let hiddenInput = document.getElementById(`hidden-${el.id}`);
+
+      if (hiddenInput) {
+        hiddenInput.value = el.value;
+      }
+    });
+
+    this.hiddenSubmitButton.click();
+  }
+
   hideButtons() {
     this.next.style.display = "none";
     this.back.style.display = "none";
@@ -64,7 +96,7 @@ class MSF {
   }
 
   setConfirmValue(index) {
-    let inputs = this.steps[index].querySelectorAll("input, select, textarea");
+    let inputs = this.getInputs(index);
 
     inputs.forEach((el) => {
       let value, confirmElement;
@@ -86,7 +118,7 @@ class MSF {
       if (value && confirmElement) {
         confirmElement.textContent = value;
       } else if (!value && confirmElement) {
-        confirmElement.textContent = "----";
+        confirmElement.textContent = "-";
       }
     });
   }
@@ -103,15 +135,22 @@ let msfController = {
     let setEventListeners = () => {
       msf.next.addEventListener("click", nextClick);
       msf.back.addEventListener("click", backClick);
+      msf.rightArrow.addEventListener(
+        "click",
+        () => {
+          msf.submitHiddenForm(0);
+        },
+        {
+          once: true,
+        }
+      );
     };
 
     let nextClick = () => {
       let currentStep = parseInt(msf.next.getAttribute("step"));
       let filledFields = checkRequiredInputs(currentStep);
-      let selectedRadios = checkRequiredRadios(currentStep);
-      let selectedCheckboxes = checkRequiredCheckboxes(currentStep);
 
-      if (filledFields && selectedRadios && selectedCheckboxes) {
+      if (filledFields) {
         msf.setConfirmValue(currentStep);
         currentStep++;
         msf.setStepAttribute(currentStep);
@@ -139,9 +178,12 @@ let msfController = {
     };
 
     let checkRequiredInputs = (index) => {
-      let requiredInputs = msf.steps[index].querySelectorAll(
-        "input[required], select[required], textarea[required]"
+      let inputs = msf.getInputs(index);
+      let requiredInputs = inputs.filter((el) => el.required);
+      let requiredCheckboxes = requiredInputs.filter(
+        (el) => el.type === "checkbox"
       );
+      let requiredRadios = requiredInputs.filter((el) => el.type === "radio");
       let filledInputs = 0;
       let pass;
 
@@ -162,25 +204,14 @@ let msfController = {
         }
       });
 
-      filledInputs === requiredInputs.length ? (pass = true) : (pass = false);
-      return pass;
-    };
-
-    let checkRequiredCheckboxes = (index) => {
-      let requiredInputs = msf.steps[index].querySelectorAll(
-        'input[type="checkbox"][required]'
-      );
-      let checkedInputs = 0;
-      let pass;
-
-      requiredInputs.forEach((el) => {
+      requiredCheckboxes.forEach((el) => {
         let checkbox = el.parentNode.querySelector(".w-checkbox-input");
 
         if (el.checked) {
           if (checkbox) {
             msf.removeWarningClass(checkbox);
           }
-          checkedInputs++;
+          filledInputs++;
         } else {
           if (checkbox) {
             msf.addWarningClass(checkbox);
@@ -188,18 +219,7 @@ let msfController = {
         }
       });
 
-      checkedInputs === requiredInputs.length ? (pass = true) : (pass = false);
-      return pass;
-    };
-
-    let checkRequiredRadios = (index) => {
-      let requiredInputs = msf.steps[index].querySelectorAll(
-        'input[type="radio"][required]'
-      );
-      let checkedInputs = 0;
-      let pass;
-
-      requiredInputs.forEach((el) => {
+      requiredRadios.forEach((el) => {
         let radio = el.parentNode.querySelector(".w-radio-input");
         let radioGroup = el.getAttribute("name");
         let isChecked = document.querySelector(
@@ -208,13 +228,16 @@ let msfController = {
 
         if (isChecked) {
           msf.removeWarningClass(radio);
-          checkedInputs++;
+          filledInputs++;
         } else {
           msf.addWarningClass(radio);
         }
       });
 
-      checkedInputs === requiredInputs.length ? (pass = true) : (pass = false);
+      filledInputs ===
+      requiredInputs.length + requiredCheckboxes.length + requiredRadios.length
+        ? (pass = true)
+        : (pass = false);
       return pass;
     };
 
