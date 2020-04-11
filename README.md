@@ -67,3 +67,4 @@ In order to make the form work, you must setup the script and initialize it:
 The code is located inside the `msf.js` file. You've got two options:
 
 1. Take the code from the file and manually place it inside the **before <\/body> tag** of your project.
+   > Remember to put the code iniside a \<script\><\/script> tag.
