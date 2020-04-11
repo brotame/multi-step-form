@@ -42,12 +42,12 @@ If you want to display the value of the inputs that the user provided, you must:
 You can collect the data from the 1st step into a hidden form and submit it when the user moves to the 2nd step.
 In order to do so, you must:
 
-1. Place a hidden form anywhere on the page and give it a unique ID.
+1. Place a hidden form anywhere on the page and give it a unique ID. `I.E: #hidden-form`
 2. In the form, place the same inputs that you want to collect and give them the following ID: `"hidden-" + InputID`.
 
 > I.E: to collect the email field that has **#email** ID, you must place in the hidden form an email field with **#hidden-email** as ID.
 
-### Recap
+### Summary
 
 To sum up, the following items **must have a unique ID**:
 
@@ -55,4 +55,15 @@ To sum up, the following items **must have a unique ID**:
 - Next button. `I.E: #next`
 - Back button. `I.E: #back`
 - _Optional_: Inputs + Text Blocks or Paragraphs to display them. `I.E: #name --> #name-value`
-- _Optional_: Hidden Form + Hidden Inputs. `I.E: #email --> #hidden-email`
+- _Optional_: Hidden Form. `I.E: #hidden-form`
+- _Optional_: Hidden Inputs that collect the first step fields. `I.E: #email --> #hidden-email`
+
+## Custom Code
+
+In order to make the form work, you must setup the script and initialize it:
+
+### Setup the script
+
+The code is located inside the `msf.js` file. You've got two options:
+
+1. Take the code from the file and manually place it inside the **before </body> tag** of your project.
