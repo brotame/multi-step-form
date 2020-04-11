@@ -4,23 +4,23 @@ A custom multi step form made for Webflow websites. You can check the cloneable 
 
  <img width="728" src="https://raw.githubusercontent.com/brotaonline/multi-step-form/master/screenshot.PNG" alt="Demo">
 
-## How to use it
+# How to use it
 
 In order to make the form work as intended, you will need to set up some components in Webflow and add some custom code.
 
-### Webflow setup
+## Webflow setup
 
-#### Form and slider
+### Form and slider
 
 Place a slider inside the form that you are using. Inside each slide, you can put all the inputs you want.
 Make sure that:
 
 - The form has a submit button placed anywhere inside it. **Hide it** as the _Next_ button will replace its functionality.
-- The form has a unique ID. `I.E: **#form**`
+- The form has a unique ID. `I.E: #form`
 
 > Note: Make sure that you give the ID to the **Form** element and not to the _Form Block_ element.
 
-#### Step change buttons
+### Step change buttons
 
 You can hide the slider arrows and navigation as you won't use them. Instead, place two buttons **anywhere you want** and give them a unique ID.
 
@@ -28,7 +28,7 @@ You can hide the slider arrows and navigation as you won't use them. Instead, pl
 
 It is recommended to hide the Back button in the first slide using Webflow interactions to avoid confusing users.
 
-#### _Optional_: Inputs confirm
+### _Optional_: Inputs confirm
 
 If you want to display the value of the inputs that the user provided, you must:
 
@@ -37,7 +37,7 @@ If you want to display the value of the inputs that the user provided, you must:
 
 > I.E: to display the value of an input that has a **#name** ID, just place a text block with **#name-value** as ID.
 
-#### _Optional_: Submit an additional form on the first step
+### _Optional_: Submit an additional form on the first step
 
 You can collect the data from the 1st step into a hidden form and submit it when the user moves to the 2nd step.
 In order to do so, you must:
@@ -47,7 +47,7 @@ In order to do so, you must:
 
 > I.E: to collect the email field that has **#email** ID, you must place in the hidden form an email field with **#hidden-email** as ID.
 
-#### Recap
+### Recap
 
 To sum up, the following items **must have a unique ID**:
 
