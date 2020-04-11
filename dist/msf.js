@@ -20,6 +20,7 @@ class MSF {
     this.back = document.getElementById(back);
     this.mask = this.form.querySelector(".w-slider-mask");
     this.steps = this.form.querySelectorAll(".w-slide");
+    this.currentStep = 0;
     this.rightArrow = this.form.querySelector(".w-slider-arrow-right");
     this.leftArrow = this.form.querySelector(".w-slider-arrow-left");
     this.nextText = nextText;
@@ -42,10 +43,6 @@ class MSF {
   setMaskHeight(index) {
     this.mask.style.height = "";
     this.mask.style.height = `${this.steps[index].offsetHeight}px`;
-  }
-
-  setStepAttribute(step) {
-    this.next.setAttribute("step", step);
   }
 
   setNextButtonText(step) {
@@ -153,20 +150,18 @@ let msfController = {
     };
 
     let nextClick = () => {
-      let currentStep = parseInt(msf.next.getAttribute("step"));
-      let filledFields = checkRequiredInputs(currentStep);
+      let filledFields = checkRequiredInputs(msf.currentStep);
 
       if (filledFields) {
-        msf.setConfirmValues(currentStep);
-        currentStep++;
-        msf.setStepAttribute(currentStep);
-        if (currentStep === msf.steps.length) {
+        msf.setConfirmValues(msf.currentStep);
+        msf.currentStep++;
+        if (msf.currentStep === msf.steps.length) {
           msf.submitForm();
           msf.hideButtons();
         } else {
           msf.goNext();
-          msf.setMaskHeight(currentStep);
-          msf.setNextButtonText(currentStep);
+          msf.setMaskHeight(msf.currentStep);
+          msf.setNextButtonText(msf.currentStep);
         }
       } else {
         msf.alertUser();
@@ -174,13 +169,12 @@ let msfController = {
     };
 
     let backClick = () => {
-      let currentStep = parseInt(msf.next.getAttribute("step"));
-      let previousStep = currentStep - 1;
+      let previousStep = msf.currentStep - 1;
 
       if (previousStep >= 0) {
         msf.goBack();
         msf.setMaskHeight(previousStep);
-        msf.setStepAttribute(previousStep);
+        msf.currentStep = previousStep;
         msf.setNextButtonText(previousStep);
       }
     };
