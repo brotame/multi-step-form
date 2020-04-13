@@ -17,6 +17,7 @@ Make sure that:
 
 - The form has a submit button placed anywhere inside it. **Hide it** as the _Next_ button will replace its functionality.
 - The form has a unique ID. `I.E: #form`
+- The slider has the _Swipe Gestures_ and _Auto Play Slides_ options disabled.
 
 > Note: Make sure that you give the ID to the **Form** element and not to the _Form Block_ element.
 
