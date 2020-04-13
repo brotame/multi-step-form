@@ -93,7 +93,7 @@ You've got two options (**only do one of them**):
 2. Include the script tag below in the **before <\/body> tag** section of your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/brotaonline/multi-step-form@1.4/dist/msf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/brotame/multi-step-form@1.4/dist/msf.min.js"></script>
 ```
 
 ### Initialize the script
