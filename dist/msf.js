@@ -82,11 +82,15 @@ class MSF {
   }
 
   addWarningClass(target) {
-    target.classList.add(this.warningClass);
+    if (this.warningClass) {
+      target.classList.add(this.warningClass);
+    }
   }
 
   removeWarningClass(target) {
-    target.classList.remove(this.warningClass);
+    if (this.warningClass) {
+      target.classList.remove(this.warningClass);
+    }
   }
 
   showAlert() {
