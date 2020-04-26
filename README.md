@@ -34,7 +34,7 @@ You can hide the slider arrows and navigation as you won't use them. Instead, pl
 
 It is recommended to hide the Back button in the first slide using Webflow interactions to avoid confusing users.
 
-### Warning class
+### _Optional_: Warning class
 
 When an input is not filled, the script adds a CSS class to it. You can create the CSS class using Webflow itself or via custom code. I.E:
 
@@ -48,7 +48,7 @@ When an input is not filled, the script adds a CSS class to it. You can create t
 
 If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure to set the style to **Custom** inside the element settings in the Webflow designer.
 
-### Alert
+### _Optional_: Alert
 
 Aside from the warning CSS class that is applied to the inputs, you can also alert the user. You have two options:
 
@@ -127,7 +127,7 @@ Replace the following keys (delete the optional ones that you will be not using:
 | `backButtonID`     | `Yes`      | The ID of the Back button.                                                                                                                    | `backButtonID: "back"`                               |
 | `nextButtonText`   | `Yes`      | The text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. | `nextButtonText: "Next Step"`                        |
 | `submitButtonText` | `Yes`      | The text that you want to display when the user reaches the last step.                                                                        | `submitButtonText: "Submit"`                         |
-| `warningClass`     | `Yes`      | The CSS class that you want to add to the inputs that are not filled.                                                                         | `warningClass: "warning"`                            |
+| `warningClass`     | `Optional` | The CSS class that you want to add to the inputs that are not filled.                                                                         | `warningClass: "warning"`                            |
 | `alertText`        | `Optional` | The text that you want to show in an alert window when some inputs are not filled.                                                            | `alertText: "Please, fill all the required fields."` |
 | `alertElementID`   | `Optional` | The element that you want to show when some inputs are not filled.                                                                            | `alertElementID: "alert"`                            |
 | `hiddenFormID`     | `Optional` | The ID of the Hidden Form element.                                                                                                            | `hiddenFormID: "hidden-form"`                        |
