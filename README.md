@@ -119,17 +119,18 @@ Place the script tag below in the **before <\/body> tag** section of your page a
 ```
 
 Replace the following keys (delete the optional ones that you will be not using:
-| Key | Required | Description | Example |
-|---|---|---|
-| `formID` | `Yes` | The ID of the Form element. | `formID: "form"` |
-| `nextButtonID` | `Yes` | The ID of the Next button. | `nextButtonID: next` |
-| `backButtonID` | `Yes` | The ID of the Back button. | `backButtonID: "back"` |
-| `nextButtonText` | `Yes` | The text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. | `nextButtonText: "Next Step"` |
-| `submitButtonText` | `Yes` | The text that you want to display when the user reaches the last step. | `submitButtonText: "Submit"` |
-| `warningClass` | `Yes` | The CSS class that you want to add to the inputs that are not filled. | `warningClass: "warning"` |
-| `alertText` | `Optional` | The text that you want to show in an alert window when some inputs are not filled. | `alertText: "Please, fill all the required fields."` |
-| `alertElementID` | `Optional` | The element that you want to show when some inputs are not filled. | `alertElementID: "alert"` |
-| `hiddenFormID` | `Optional` | The ID of the Hidden Form element. | `hiddenFormID: "hidden-form"` |
+
+| Key                | Required   | Description                                                                                                                                   | Example                                              |
+| ------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `formID`           | `Yes`      | The ID of the Form element.                                                                                                                   | `formID: "form"`                                     |
+| `nextButtonID`     | `Yes`      | The ID of the Next button.                                                                                                                    | `nextButtonID: next`                                 |
+| `backButtonID`     | `Yes`      | The ID of the Back button.                                                                                                                    | `backButtonID: "back"`                               |
+| `nextButtonText`   | `Yes`      | The text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. | `nextButtonText: "Next Step"`                        |
+| `submitButtonText` | `Yes`      | The text that you want to display when the user reaches the last step.                                                                        | `submitButtonText: "Submit"`                         |
+| `warningClass`     | `Yes`      | The CSS class that you want to add to the inputs that are not filled.                                                                         | `warningClass: "warning"`                            |
+| `alertText`        | `Optional` | The text that you want to show in an alert window when some inputs are not filled.                                                            | `alertText: "Please, fill all the required fields."` |
+| `alertElementID`   | `Optional` | The element that you want to show when some inputs are not filled.                                                                            | `alertElementID: "alert"`                            |
+| `hiddenFormID`     | `Optional` | The ID of the Hidden Form element.                                                                                                            | `hiddenFormID: "hidden-form"`                        |
 
 #### Initialize examples
 
