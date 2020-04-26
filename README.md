@@ -8,8 +8,8 @@ A custom multi step form made for Webflow websites. You can check the cloneable 
 
 In order to make the form work as intended, you will need to:
 
-1. [Set up some components in Webflow](#webflow-setup)
-2. [Add the custom code](#custom-code)
+1. [Set up some components in Webflow](#1-webflow-setup)
+2. [Add the custom code](#2-custom-code)
 
 ## 1. Webflow setup
 
