@@ -46,6 +46,15 @@ When an input is not filled, the script adds a CSS class to it. You can create t
 </style>
 ```
 
+### Alert
+
+Aside from the warning CSS class that is applied to the inputs, you can also alert the user. You have two options:
+
+1. Show an alert window with a message: check the [initialize script section](#initialize-the-script) for more info.
+2. Display an element in the form (text block, div, image, etc). To do so, you must place the element anywhere you want and:
+   - Give the element a unique ID. `I.E: #alert`.
+   - Give the element a combo CSS class of **.hidden** which sets the element to _display:none_. This is necessary as the script adds or removes the **.hidden** class when the input has to be displayed or not.
+
 If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure to set the style to **Custom** inside the element settings in the Webflow designer.
 
 ### _Optional_: Inputs confirm
@@ -99,8 +108,9 @@ Place the script tag below in the **before <\/body> tag** section of your page a
       backButtonID: "BACK_BUTTON_ID",
       nextButtonText: "NEXT_BUTTON_TEXT",
       submitButtonText: "SUBMIT_BUTTON_TEXT",
-      alertText: "ALERT_TEXT",
       warningClass: "WARNING_CLASS",
+      alertText: "ALERT_TEXT",
+      alertElementID: "ALERT_ELEMENT_ID",
       hiddenFormID: "HIDDEN_FORM_ID",
     });
     msfController.init(msfData);
@@ -115,13 +125,14 @@ Replace the following strings:
 - BACK_BUTTON_ID: the ID of the Back button. `I.E: back`
 - NEXT_BUTTON_TEXT: the text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. `I.E: Next`
 - SUBMIT_BUTTON_TEXT: the text that you want to display when the user reaches the last step. `I.E: Submit`
-- ALERT_TEXT: the text that you want to show when some inputs are not filled. `I.E: Please, fill all the required fields.`
 - WARNING_CLASS: the CSS class that you want to add to the inputs that are not filled. `I.E: warning`
+- _(OPTIONAL)_ ALERT_TEXT: the text that you want to show in an alert window when some inputs are not filled. `I.E: Please, fill all the required fields.`
+- _(OPTIONAL)_ ALERT_ELEMENT_ID: the element that you want to show when some inputs are not filled. `I.E: alert`
 - _(OPTIONAL)_ HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this line. `I.E: hidden-form`
 
 #### Initialize examples
 
-Form that doesn't use the hidden form functionality:
+Form that doesn't use the hidden form functionality and shows an element when a required input is not filled:
 
 ```html
 <script>
@@ -133,15 +144,15 @@ Form that doesn't use the hidden form functionality:
       backButtonID: "msf-back",
       nextButtonText: "Next",
       submitButtonText: "Submit",
-      alertText: "Please, fill all the required fields.",
       warningClass: "warning",
+      alertElementID: "msf-alert",
     });
     msfController.init(msfData);
   });
 </script>
 ```
 
-Form that uses the hidden form functionality:
+Form that uses the hidden form functionality and shows an alert window when a required input is not filled:
 
 ```html
 <script>
@@ -153,8 +164,8 @@ Form that uses the hidden form functionality:
       backButtonID: "back-button",
       nextButtonText: "Next Step",
       submitButtonText: "Send",
-      alertText: "There are some fields that are not filled.",
       warningClass: "red-border",
+      alertText: "There are some fields that are not filled.",
       hiddenFormID: "hidden-form",
     });
     msfController.init(msfData);
