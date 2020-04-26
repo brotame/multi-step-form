@@ -6,9 +6,14 @@ A custom multi step form made for Webflow websites. You can check the cloneable 
 
 # How to use it
 
-In order to make the form work as intended, you will need to set up some components in Webflow and add some custom code.
+In order to make the form work as intended, you will need to:
 
-## Webflow setup
+1. [Set up some components in Webflow](#webflow-setup)
+2. [Add the custom code](#custom-code)
+
+## 1. Webflow setup
+
+If you don't want to do this manually, you will find an already built [starter form](https://brota-msf.webflow.io/starter-cloneable) in the cloneable project.
 
 ### Form and slider
 
@@ -66,39 +71,43 @@ In order to do so, you must:
 
 > I.E: to collect the email field that has **#email** ID, you must place in the hidden form an email field with **#hidden-email** as ID.
 
-### Webflow Setup Summary
-
-To sum up, the following items **must have a unique ID**:
-
-- Form. `I.E: #form`
-- Next button. `I.E: #next`
-- Back button. `I.E: #back`
-- _Optional_: Inputs + Text Blocks or Paragraphs to display them. `I.E: #name --> #name-value`
-- _Optional_: Hidden Form. `I.E: #hidden-form`
-- _Optional_: Hidden Inputs that collect the first step fields. `I.E: #email --> #hidden-email`
-
-## Custom Code
+## 2. Custom Code
 
 In order to make the form work, you must setup the script and initialize it:
 
 ### Setup the script
 
-The code is located inside the `/dist/msf.js` file.
-You've got two options (**only do one of them**):
-
-1. Take the code from the file and manually place it inside the **before <\/body> tag** section of your page.
-
-   > Remember to put the code inside a <script><\/script> tag. It is recommended to first minify the code as it will reduce significantly the amount of characters used.
-
-2. Include the script tag below in the **before <\/body> tag** section of your page:
+Include the script tag below in the **before <\/body> tag** section of your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/brotame/multi-step-form@1.4/dist/msf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/brotame/multi-step-form@1.5/dist/msf.min.js"></script>
 ```
+
+If you don't want to use CDN delivery, you can take the code inside the `/dist/msf.js` file and put it in your project.
 
 ### Initialize the script
 
 Place the script tag below in the **before <\/body> tag** section of your page after the main script.
+
+```html
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    let msfData = new MSF({
+      formID: "FORM_ID",
+      nextButtonID: "NEXT_BUTTON_ID",
+      backButtonID: "BACK_BUTTON_ID",
+      nextButtonText: "NEXT_BUTTON_TEXT",
+      submitButtonText: "SUBMIT_BUTTON_TEXT",
+      alertText: "ALERT_TEXT",
+      warningClass: "WARNING_CLASS",
+      hiddenFormID: "HIDDEN_FORM_ID",
+    });
+    msfController.init(msfData);
+  });
+</script>
+```
+
 Replace the following strings:
 
 - FORM_ID: the ID of the Form element. `I.E: form`
@@ -108,26 +117,7 @@ Replace the following strings:
 - SUBMIT_BUTTON_TEXT: the text that you want to display when the user reaches the last step. `I.E: Submit`
 - ALERT_TEXT: the text that you want to show when some inputs are not filled. `I.E: Please, fill all the required fields.`
 - WARNING_CLASS: the CSS class that you want to add to the inputs that are not filled. `I.E: warning`
-- _(OPTIONAL)_ HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this field. `I.E: hidden-form`
-
-```html
-<script>
-  var Webflow = Webflow || [];
-  Webflow.push(function () {
-    let msfData = new MSF(
-      "FORM_ID",
-      "NEXT_BUTTON_ID",
-      "BACK_BUTTON_ID",
-      "NEXT_BUTTON_TEXT",
-      "SUBMIT_BUTTON_TEXT",
-      "ALERT_TEXT",
-      "WARNING_CLASS",
-      "OPTIONAL_HIDDEN_FORM_ID"
-    );
-    msfController.init(msfData);
-  });
-</script>
-```
+- _(OPTIONAL)_ HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this line. `I.E: hidden-form`
 
 #### Initialize examples
 
@@ -137,15 +127,15 @@ Form that doesn't use the hidden form functionality:
 <script>
   var Webflow = Webflow || [];
   Webflow.push(function () {
-    let msfData = new MSF(
-      "msf",
-      "msf-next",
-      "msf-back",
-      "Next",
-      "Submit",
-      "Please, fill all the required fields.",
-      "warning"
-    );
+    let msfData = new MSF({
+      formID: "msf",
+      nextButtonID: "msf-next",
+      backButtonID: "msf-back",
+      nextButtonText: "Next",
+      submitButtonText: "Submit",
+      alertText: "Please, fill all the required fields.",
+      warningClass: "warning",
+    });
     msfController.init(msfData);
   });
 </script>
@@ -157,16 +147,16 @@ Form that uses the hidden form functionality:
 <script>
   var Webflow = Webflow || [];
   Webflow.push(function () {
-    let msfData = new MSF(
-      "multi-step-form",
-      "next-button",
-      "back-button",
-      "Next Step",
-      "Send",
-      "There are some fields that are not filled.",
-      "red-border",
-      "hidden-form"
-    );
+    let msfData = new MSF({
+      formID: "multi-step-form",
+      nextButtonID: "next-button",
+      backButtonID: "back-button",
+      nextButtonText: "Next Step",
+      submitButtonText: "Send",
+      alertText: "There are some fields that are not filled.",
+      warningClass: "red-border",
+      hiddenFormID: "hidden-form",
+    });
     msfController.init(msfData);
   });
 </script>
