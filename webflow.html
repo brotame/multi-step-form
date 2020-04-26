@@ -1,0 +1,16 @@
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    let msfData = new MSF({
+      formID: "msf",
+      nextButtonID: "msf-next",
+      backButtonID: "msf-back",
+      nextButtonText: "Next",
+      submitButtonText: "Submit",
+      alertText: "Please, fill all the required fields.",
+      warningClass: "warning",
+      hiddenFormID: "hidden-form",
+    });
+    msfController.init(msfData);
+  });
+</script>
