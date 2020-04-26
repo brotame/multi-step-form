@@ -118,17 +118,18 @@ Place the script tag below in the **before <\/body> tag** section of your page a
 </script>
 ```
 
-Replace the following strings:
-
-- FORM_ID: the ID of the Form element. `I.E: form`
-- NEXT_BUTTON_ID: the ID of the Next button. `I.E: next`
-- BACK_BUTTON_ID: the ID of the Back button. `I.E: back`
-- NEXT_BUTTON_TEXT: the text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. `I.E: Next`
-- SUBMIT_BUTTON_TEXT: the text that you want to display when the user reaches the last step. `I.E: Submit`
-- WARNING_CLASS: the CSS class that you want to add to the inputs that are not filled. `I.E: warning`
-- _(OPTIONAL)_ ALERT_TEXT: the text that you want to show in an alert window when some inputs are not filled. `I.E: Please, fill all the required fields.`
-- _(OPTIONAL)_ ALERT_ELEMENT_ID: the element that you want to show when some inputs are not filled. `I.E: alert`
-- _(OPTIONAL)_ HIDDEN_FORM_ID: the ID of the Hidden Form element. If you are not using this functionality, just delete this line. `I.E: hidden-form`
+Replace the following keys (delete the optional ones that you will be not using:
+| Key | Required | Description | Example |
+|---|---|---|
+| `formID` | `Yes` | The ID of the Form element. | `formID: "form"` |
+| `nextButtonID` | `Yes` | The ID of the Next button. | `nextButtonID: next` |
+| `backButtonID` | `Yes` | The ID of the Back button. | `backButtonID: "back"` |
+| `nextButtonText` | `Yes` | The text inside the Next button. This is required because the script changes the text of the Next button when the user reaches the last step. | `nextButtonText: "Next Step"` |
+| `submitButtonText` | `Yes` | The text that you want to display when the user reaches the last step. | `submitButtonText: "Submit"` |
+| `warningClass` | `Yes` | The CSS class that you want to add to the inputs that are not filled. | `warningClass: "warning"` |
+| `alertText` | `Optional` | The text that you want to show in an alert window when some inputs are not filled. | `alertText: "Please, fill all the required fields."` |
+| `alertElementID` | `Optional` | The element that you want to show when some inputs are not filled. | `alertElementID: "alert"` |
+| `hiddenFormID` | `Optional` | The ID of the Hidden Form element. | `hiddenFormID: "hidden-form"` |
 
 #### Initialize examples
 
