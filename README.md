@@ -89,7 +89,7 @@ In order to make the form work, you must setup the script and initialize it:
 Include the script tag below in the **before <\/body> tag** section of your page:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/brotame/multi-step-form@1.5/dist/msf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/brotame/multi-step-form@1.6/dist/msf.min.js"></script>
 ```
 
 If you don't want to use CDN delivery, you can take the code inside the `/dist/msf.js` file and put it in your project.
