@@ -1,34 +1,25 @@
 /**
  * Multi Step Form functionality for Webflow
- * MIT License © Alex Iglesias - BROTA.
+ * MIT License © Alex Iglesias - https://brota.me.
  */
 
 class MSF {
-  constructor(
-    form,
-    next,
-    back,
-    nextText,
-    submitText,
-    alertText,
-    warningClass,
-    hiddenForm
-  ) {
-    this.form = document.getElementById(form);
+  constructor(data) {
+    this.currentStep = 0;
+    this.form = document.getElementById(data.formID);
+    this.next = document.getElementById(data.nextButtonID);
+    this.back = document.getElementById(data.backButtonID);
     this.submitButton = this.form.querySelector('input[type="submit"]');
-    this.next = document.getElementById(next);
-    this.back = document.getElementById(back);
     this.mask = this.form.querySelector(".w-slider-mask");
     this.steps = this.form.querySelectorAll(".w-slide");
-    this.currentStep = 0;
     this.rightArrow = this.form.querySelector(".w-slider-arrow-right");
     this.leftArrow = this.form.querySelector(".w-slider-arrow-left");
-    this.nextText = nextText;
-    this.submitText = submitText;
-    this.alertText = alertText;
-    this.warningClass = warningClass;
-    if (hiddenForm) {
-      this.hiddenForm = document.getElementById(hiddenForm);
+    this.nextText = data.nextButtonText;
+    this.submitText = data.submitButtonText;
+    this.alertText = data.alertText;
+    this.warningClass = data.warningClass;
+    if (data.hiddenFormID) {
+      this.hiddenForm = document.getElementById(data.hiddenFormID);
       this.hiddenSubmitButton = this.hiddenForm.querySelector(
         'input[type="submit"]'
       );
@@ -36,20 +27,22 @@ class MSF {
   }
 
   getInputs(index) {
-    let inputs = this.steps[index].querySelectorAll("input, select, textarea");
+    const inputs = this.steps[index].querySelectorAll(
+      "input, select, textarea"
+    );
     return Array.from(inputs);
   }
 
-  setMaskHeight(index) {
+  setMaskHeight() {
     this.mask.style.height = "";
-    this.mask.style.height = `${this.steps[index].offsetHeight}px`;
+    this.mask.style.height = `${this.steps[this.currentStep].offsetHeight}px`;
   }
 
-  setNextButtonText(step) {
-    if (step === this.steps.length - 1) {
+  setNextButtonText() {
+    if (this.currentStep === this.steps.length - 1) {
       this.next.textContent = this.submitText;
     }
-    if (step === this.steps.length - 2) {
+    if (this.currentStep === this.steps.length - 2) {
       this.next.textContent = this.nextText;
     }
   }
@@ -67,10 +60,10 @@ class MSF {
   }
 
   submitHiddenForm(index) {
-    let inputs = this.getInputs(index);
+    const inputs = this.getInputs(index);
 
     inputs.forEach((el) => {
-      let hiddenInput = document.getElementById(`hidden-${el.id}`);
+      const hiddenInput = document.getElementById(`hidden-${el.id}`);
 
       if (hiddenInput) {
         hiddenInput.value = el.value;
@@ -98,13 +91,13 @@ class MSF {
   }
 
   setConfirmValues(index) {
-    let inputs = this.getInputs(index);
+    const inputs = this.getInputs(index);
 
     inputs.forEach((el) => {
       let value, confirmElement;
       if (el.type === "radio") {
-        let radioGroup = el.getAttribute("name");
-        let isChecked = document.querySelector(
+        const radioGroup = el.getAttribute("name");
+        const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
 
@@ -126,14 +119,14 @@ class MSF {
   }
 }
 
-let msfController = {
+const msfController = {
   init: (msf) => {
-    let start = () => {
+    const start = () => {
       setEventListeners();
       msf.setMaskHeight(0);
     };
 
-    let setEventListeners = () => {
+    const setEventListeners = () => {
       msf.next.addEventListener("click", nextClick);
       msf.back.addEventListener("click", backClick);
       if (msf.hiddenForm) {
@@ -149,8 +142,8 @@ let msfController = {
       }
     };
 
-    let nextClick = () => {
-      let filledFields = checkRequiredInputs(msf.currentStep);
+    const nextClick = () => {
+      const filledFields = checkRequiredInputs(msf.currentStep);
 
       if (filledFields) {
         msf.setConfirmValues(msf.currentStep);
@@ -160,41 +153,40 @@ let msfController = {
           msf.hideButtons();
         } else {
           msf.goNext();
-          msf.setMaskHeight(msf.currentStep);
-          msf.setNextButtonText(msf.currentStep);
+          msf.setMaskHeight();
+          msf.setNextButtonText();
         }
       } else {
         msf.alertUser();
       }
     };
 
-    let backClick = () => {
-      let previousStep = msf.currentStep - 1;
+    const backClick = () => {
+      const previousStep = msf.currentStep - 1;
 
       if (previousStep >= 0) {
         msf.goBack();
-        msf.setMaskHeight(previousStep);
         msf.currentStep = previousStep;
-        msf.setNextButtonText(previousStep);
+        msf.setMaskHeight();
+        msf.setNextButtonText();
       }
     };
 
-    let checkRequiredInputs = (index) => {
-      let inputs = msf.getInputs(index);
-      let requiredInputs = inputs.filter((el) => el.required);
-      let requiredCheckboxes = requiredInputs.filter(
+    const checkRequiredInputs = (index) => {
+      const inputs = msf.getInputs(index);
+      const requiredInputs = inputs.filter((el) => el.required);
+      const requiredCheckboxes = requiredInputs.filter(
         (el) => el.type === "checkbox"
       );
-      let requiredRadios = requiredInputs.filter((el) => el.type === "radio");
+      const requiredRadios = requiredInputs.filter((el) => el.type === "radio");
       let filledInputs = 0;
-      let pass;
 
       requiredInputs.forEach((el) => {
         if (el.value && el.type !== "email") {
           msf.removeWarningClass(el);
           filledInputs++;
         } else if (el.value && el.type === "email") {
-          let correctEmail = validateEmail(el.value);
+          const correctEmail = validateEmail(el.value);
           if (correctEmail) {
             msf.removeWarningClass(el);
             filledInputs++;
@@ -207,7 +199,7 @@ let msfController = {
       });
 
       requiredCheckboxes.forEach((el) => {
-        let checkbox = el.parentNode.querySelector(".w-checkbox-input");
+        const checkbox = el.parentNode.querySelector(".w-checkbox-input");
 
         if (el.checked) {
           if (checkbox) {
@@ -222,9 +214,9 @@ let msfController = {
       });
 
       requiredRadios.forEach((el) => {
-        let radio = el.parentNode.querySelector(".w-radio-input");
-        let radioGroup = el.getAttribute("name");
-        let isChecked = document.querySelector(
+        const radio = el.parentNode.querySelector(".w-radio-input");
+        const radioGroup = el.getAttribute("name");
+        const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
 
@@ -236,15 +228,16 @@ let msfController = {
         }
       });
 
-      filledInputs ===
-      requiredInputs.length + requiredCheckboxes.length + requiredRadios.length
-        ? (pass = true)
-        : (pass = false);
-      return pass;
+      return filledInputs ===
+        requiredInputs.length +
+          requiredCheckboxes.length +
+          requiredRadios.length
+        ? true
+        : false;
     };
 
-    let validateEmail = (email) => {
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const validateEmail = (email) => {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
     };
 
