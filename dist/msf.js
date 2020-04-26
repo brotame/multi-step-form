@@ -16,8 +16,11 @@ class MSF {
     this.leftArrow = this.form.querySelector(".w-slider-arrow-left");
     this.nextText = data.nextButtonText;
     this.submitText = data.submitButtonText;
-    this.alertText = data.alertText;
     this.warningClass = data.warningClass;
+    this.alertText = data.alertText;
+    if (data.alertElementID) {
+      this.alertElement = document.getElementById(data.alertElementID);
+    }
     if (data.hiddenFormID) {
       this.hiddenForm = document.getElementById(data.hiddenFormID);
       this.hiddenSubmitButton = this.hiddenForm.querySelector(
@@ -86,8 +89,20 @@ class MSF {
     target.classList.remove(this.warningClass);
   }
 
-  alertUser() {
-    alert(this.alertText);
+  showAlert() {
+    if (this.alertText) {
+      alert(this.alertText);
+    }
+
+    if (this.alertElement) {
+      this.alertElement.classList.remove("hidden");
+    }
+  }
+
+  hideAlert() {
+    if (this.alertElement) {
+      this.alertElement.classList.add("hidden");
+    }
   }
 
   setConfirmValues(index) {
@@ -151,13 +166,15 @@ const msfController = {
         if (msf.currentStep === msf.steps.length) {
           msf.submitForm();
           msf.hideButtons();
+          msf.hideAlert();
         } else {
           msf.goNext();
           msf.setMaskHeight();
           msf.setNextButtonText();
+          msf.hideAlert();
         }
       } else {
-        msf.alertUser();
+        msf.showAlert();
       }
     };
 
@@ -169,6 +186,7 @@ const msfController = {
         msf.currentStep = previousStep;
         msf.setMaskHeight();
         msf.setNextButtonText();
+        msf.hideAlert();
       }
     };
 
