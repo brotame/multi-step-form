@@ -46,6 +46,8 @@ When an input is not filled, the script adds a CSS class to it. You can create t
 </style>
 ```
 
+If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure to set the style to **Custom** inside the element settings in the Webflow designer.
+
 ### Alert
 
 Aside from the warning CSS class that is applied to the inputs, you can also alert the user. You have two options:
@@ -54,8 +56,6 @@ Aside from the warning CSS class that is applied to the inputs, you can also ale
 2. Display an element in the form (text block, div, image, etc). To do so, you must place the element anywhere you want and:
    - Give the element a unique ID. `I.E: #alert`.
    - Give the element a combo CSS class of **.hidden** which sets the element to _display:none_. This is necessary as the script adds or removes the **.hidden** class when the input has to be displayed or not.
-
-If you want to apply the class to the _Checkboxes_ and _Radio_ inputs, make sure to set the style to **Custom** inside the element settings in the Webflow designer.
 
 ### _Optional_: Inputs confirm
 
