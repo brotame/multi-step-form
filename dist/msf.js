@@ -65,11 +65,11 @@ class MSF {
   submitHiddenForm(index) {
     const inputs = this.getInputs(index);
 
-    inputs.forEach((el) => {
-      const hiddenInput = document.getElementById(`hidden-${el.id}`);
+    inputs.forEach((input) => {
+      const hiddenInput = document.getElementById(`hidden-${input.id}`);
 
       if (hiddenInput) {
-        hiddenInput.value = el.value;
+        hiddenInput.value = input.value;
       }
     });
 
@@ -112,10 +112,11 @@ class MSF {
   setConfirmValues(index) {
     const inputs = this.getInputs(index);
 
-    inputs.forEach((el) => {
+    inputs.forEach((input) => {
       let value, confirmElement;
-      if (el.type === "radio") {
-        const radioGroup = el.getAttribute("name");
+
+      if (input.type === "radio") {
+        const radioGroup = input.getAttribute("name");
         const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
@@ -125,8 +126,8 @@ class MSF {
           confirmElement = document.getElementById(`${radioGroup}-value`);
         }
       } else {
-        value = el.value;
-        confirmElement = document.getElementById(`${el.id}-value`);
+        value = input.value;
+        confirmElement = document.getElementById(`${input.id}-value`);
       }
 
       if (value && confirmElement) {
@@ -196,34 +197,36 @@ const msfController = {
 
     const checkRequiredInputs = (index) => {
       const inputs = msf.getInputs(index);
-      const requiredInputs = inputs.filter((el) => el.required);
+      const requiredInputs = inputs.filter((input) => input.required);
       const requiredCheckboxes = requiredInputs.filter(
-        (el) => el.type === "checkbox"
+        (input) => input.type === "checkbox"
       );
-      const requiredRadios = requiredInputs.filter((el) => el.type === "radio");
+      const requiredRadios = requiredInputs.filter(
+        (input) => input.type === "radio"
+      );
       let filledInputs = 0;
 
-      requiredInputs.forEach((el) => {
-        if (el.value && el.type !== "email") {
-          msf.removeWarningClass(el);
+      requiredInputs.forEach((input) => {
+        if (input.value && input.type !== "email") {
+          msf.removeWarningClass(input);
           filledInputs++;
-        } else if (el.value && el.type === "email") {
-          const correctEmail = validateEmail(el.value);
+        } else if (input.value && input.type === "email") {
+          const correctEmail = validateEmail(input.value);
           if (correctEmail) {
-            msf.removeWarningClass(el);
+            msf.removeWarningClass(input);
             filledInputs++;
           } else {
-            msf.addWarningClass(el);
+            msf.addWarningClass(input);
           }
         } else {
-          msf.addWarningClass(el);
+          msf.addWarningClass(input);
         }
       });
 
-      requiredCheckboxes.forEach((el) => {
-        const checkbox = el.parentNode.querySelector(".w-checkbox-input");
+      requiredCheckboxes.forEach((input) => {
+        const checkbox = input.parentNode.querySelector(".w-checkbox-input");
 
-        if (el.checked) {
+        if (input.checked) {
           if (checkbox) {
             msf.removeWarningClass(checkbox);
           }
@@ -235,9 +238,9 @@ const msfController = {
         }
       });
 
-      requiredRadios.forEach((el) => {
-        const radio = el.parentNode.querySelector(".w-radio-input");
-        const radioGroup = el.getAttribute("name");
+      requiredRadios.forEach((input) => {
+        const radio = input.parentNode.querySelector(".w-radio-input");
+        const radioGroup = input.getAttribute("name");
         const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
