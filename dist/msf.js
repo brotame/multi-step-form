@@ -42,12 +42,10 @@ class MSF {
   }
 
   setNextButtonText() {
-    if (this.currentStep === this.steps.length - 1) {
+    if (this.currentStep === this.steps.length - 1)
       this.next.textContent = this.submitText;
-    }
-    if (this.currentStep === this.steps.length - 2) {
+    if (this.currentStep === this.steps.length - 2)
       this.next.textContent = this.nextText;
-    }
   }
 
   goNext() {
@@ -68,9 +66,7 @@ class MSF {
     inputs.forEach((input) => {
       const hiddenInput = document.getElementById(`hidden-${input.id}`);
 
-      if (hiddenInput) {
-        hiddenInput.value = input.value;
-      }
+      if (hiddenInput) hiddenInput.value = input.value;
     });
 
     this.hiddenSubmitButton.click();
@@ -82,35 +78,24 @@ class MSF {
   }
 
   addWarningClass(target) {
-    if (this.warningClass) {
-      target.classList.add(this.warningClass);
-    }
+    if (this.warningClass) target.classList.add(this.warningClass);
   }
 
   removeWarningClass(target) {
-    if (this.warningClass) {
-      target.classList.remove(this.warningClass);
-    }
+    if (this.warningClass) target.classList.remove(this.warningClass);
   }
 
   showAlert() {
-    if (this.alertText) {
-      alert(this.alertText);
-    }
-
-    if (this.alertElement) {
-      this.alertElement.classList.remove("hidden");
-    }
+    if (this.alertText) alert(this.alertText);
+    if (this.alertElement) this.alertElement.classList.remove("hidden");
   }
 
   hideAlert() {
-    if (this.alertElement) {
-      this.alertElement.classList.add("hidden");
-    }
+    if (this.alertElement) this.alertElement.classList.add("hidden");
   }
 
-  setConfirmValues(index) {
-    const inputs = this.getInputs(index);
+  setConfirmValues() {
+    const inputs = this.getInputs(this.currentStep);
 
     inputs.forEach((input) => {
       let value, confirmElement;
@@ -130,11 +115,9 @@ class MSF {
         confirmElement = document.getElementById(`${input.id}-value`);
       }
 
-      if (value && confirmElement) {
-        confirmElement.textContent = value;
-      } else if (!value && confirmElement) {
-        confirmElement.textContent = "-";
-      }
+      if (!confirmElement) return;
+
+      confirmElement.textContent = value ? value : "-";
     });
   }
 }
@@ -155,9 +138,7 @@ const msfController = {
           () => {
             msf.submitHiddenForm(0);
           },
-          {
-            once: true,
-          }
+          { once: true }
         );
       }
     };
@@ -165,22 +146,24 @@ const msfController = {
     const nextClick = () => {
       const filledFields = checkRequiredInputs(msf.currentStep);
 
-      if (filledFields) {
-        msf.setConfirmValues(msf.currentStep);
-        msf.currentStep++;
-        if (msf.currentStep === msf.steps.length) {
-          msf.submitForm();
-          msf.hideButtons();
-          msf.hideAlert();
-        } else {
-          msf.goNext();
-          msf.setMaskHeight();
-          msf.setNextButtonText();
-          msf.hideAlert();
-        }
-      } else {
+      if (!filledFields) {
         msf.showAlert();
+        return;
       }
+
+      msf.setConfirmValues();
+      msf.currentStep++;
+
+      if (msf.currentStep === msf.steps.length) {
+        msf.submitForm();
+        msf.hideButtons();
+      } else {
+        msf.goNext();
+        msf.setMaskHeight();
+        msf.setNextButtonText();
+      }
+
+      msf.hideAlert();
     };
 
     const backClick = () => {
@@ -207,35 +190,37 @@ const msfController = {
       let filledInputs = 0;
 
       requiredInputs.forEach((input) => {
-        if (input.value && input.type !== "email") {
+        if (!input.value) {
+          msf.addWarningClass(input);
+          return;
+        }
+
+        if (input.type === "email") {
+          const correctEmail = validateEmail(input.value);
+          if (!correctEmail) {
+            msf.addWarningClass(input);
+            return;
+          }
+
           msf.removeWarningClass(input);
           filledInputs++;
-        } else if (input.value && input.type === "email") {
-          const correctEmail = validateEmail(input.value);
-          if (correctEmail) {
-            msf.removeWarningClass(input);
-            filledInputs++;
-          } else {
-            msf.addWarningClass(input);
-          }
-        } else {
-          msf.addWarningClass(input);
+          return;
         }
+
+        msf.removeWarningClass(input);
+        filledInputs++;
       });
 
       requiredCheckboxes.forEach((input) => {
         const checkbox = input.parentNode.querySelector(".w-checkbox-input");
 
-        if (input.checked) {
-          if (checkbox) {
-            msf.removeWarningClass(checkbox);
-          }
-          filledInputs++;
-        } else {
-          if (checkbox) {
-            msf.addWarningClass(checkbox);
-          }
+        if (!input.checked) {
+          if (checkbox) msf.addWarningClass(checkbox);
+          return;
         }
+
+        if (checkbox) msf.removeWarningClass(checkbox);
+        filledInputs++;
       });
 
       requiredRadios.forEach((input) => {
