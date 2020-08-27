@@ -10,10 +10,10 @@ class MSF {
     this.next = document.getElementById(data.nextButtonID);
     this.back = document.getElementById(data.backButtonID);
     this.submitButton = this.form.querySelector('input[type="submit"]');
-    this.mask = this.form.querySelector(".w-slider-mask");
-    this.steps = this.form.querySelectorAll(".w-slide");
-    this.rightArrow = this.form.querySelector(".w-slider-arrow-right");
-    this.leftArrow = this.form.querySelector(".w-slider-arrow-left");
+    this.mask = this.form.querySelector('.w-slider-mask');
+    this.steps = this.form.querySelectorAll('.w-slide');
+    this.rightArrow = this.form.querySelector('.w-slider-arrow-right');
+    this.leftArrow = this.form.querySelector('.w-slider-arrow-left');
     this.nextText = data.nextButtonText;
     this.submitText = data.submitButtonText;
     this.warningClass = data.warningClass;
@@ -31,13 +31,13 @@ class MSF {
 
   getInputs(index) {
     const inputs = this.steps[index].querySelectorAll(
-      "input, select, textarea"
+      'input, select, textarea'
     );
     return Array.from(inputs);
   }
 
   setMaskHeight() {
-    this.mask.style.height = "";
+    this.mask.style.height = '';
     this.mask.style.height = `${this.steps[this.currentStep].offsetHeight}px`;
   }
 
@@ -73,25 +73,25 @@ class MSF {
   }
 
   hideButtons() {
-    this.next.style.display = "none";
-    this.back.style.display = "none";
+    this.next.style.display = 'none';
+    this.back.style.display = 'none';
   }
 
   addWarningClass(target) {
-    if (this.warningClass) target.classList.add(this.warningClass);
+    target.classList.add(this.warningClass);
   }
 
   removeWarningClass(target) {
-    if (this.warningClass) target.classList.remove(this.warningClass);
+    target.classList.remove(this.warningClass);
   }
 
   showAlert() {
     if (this.alertText) alert(this.alertText);
-    if (this.alertElement) this.alertElement.classList.remove("hidden");
+    if (this.alertElement) this.alertElement.classList.remove('hidden');
   }
 
   hideAlert() {
-    if (this.alertElement) this.alertElement.classList.add("hidden");
+    if (this.alertElement) this.alertElement.classList.add('hidden');
   }
 
   setConfirmValues() {
@@ -100,8 +100,8 @@ class MSF {
     inputs.forEach((input) => {
       let value, confirmElement;
 
-      if (input.type === "radio") {
-        const radioGroup = input.getAttribute("name");
+      if (input.type === 'radio') {
+        const radioGroup = input.getAttribute('name');
         const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
@@ -117,7 +117,7 @@ class MSF {
 
       if (!confirmElement) return;
 
-      confirmElement.textContent = value ? value : "-";
+      confirmElement.textContent = value ? value : '-';
     });
   }
 }
@@ -130,11 +130,11 @@ const msfController = {
     };
 
     const setEventListeners = () => {
-      msf.next.addEventListener("click", nextClick);
-      msf.back.addEventListener("click", backClick);
+      msf.next.addEventListener('click', nextClick);
+      msf.back.addEventListener('click', backClick);
       if (msf.hiddenForm) {
         msf.rightArrow.addEventListener(
-          "click",
+          'click',
           () => {
             msf.submitHiddenForm(0);
           },
@@ -182,10 +182,10 @@ const msfController = {
       const inputs = msf.getInputs(index);
       const requiredInputs = inputs.filter((input) => input.required);
       const requiredCheckboxes = requiredInputs.filter(
-        (input) => input.type === "checkbox"
+        (input) => input.type === 'checkbox'
       );
       const requiredRadios = requiredInputs.filter(
-        (input) => input.type === "radio"
+        (input) => input.type === 'radio'
       );
       let filledInputs = 0;
 
@@ -195,7 +195,7 @@ const msfController = {
           return;
         }
 
-        if (input.type === "email") {
+        if (input.type === 'email') {
           const correctEmail = validateEmail(input.value);
           if (!correctEmail) {
             msf.addWarningClass(input);
@@ -212,7 +212,7 @@ const msfController = {
       });
 
       requiredCheckboxes.forEach((input) => {
-        const checkbox = input.parentNode.querySelector(".w-checkbox-input");
+        const checkbox = input.parentNode.querySelector('.w-checkbox-input');
 
         if (!input.checked) {
           if (checkbox) msf.addWarningClass(checkbox);
@@ -224,8 +224,8 @@ const msfController = {
       });
 
       requiredRadios.forEach((input) => {
-        const radio = input.parentNode.querySelector(".w-radio-input");
-        const radioGroup = input.getAttribute("name");
+        const radio = input.parentNode.querySelector('.w-radio-input');
+        const radioGroup = input.getAttribute('name');
         const isChecked = document.querySelector(
           `input[name="${radioGroup}"]:checked`
         );
